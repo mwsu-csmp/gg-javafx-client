@@ -1,10 +1,13 @@
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.text.Text;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
-public class LoginPane extends FlowPane {
+public class LoginPane extends BorderPane {
     private final TextField url;
     private final TextField username;
     private final PasswordField password;
@@ -12,19 +15,22 @@ public class LoginPane extends FlowPane {
     private final Button clear;
 
     public LoginPane() {
+        VBox fields = new VBox();
+        HBox buttons = new HBox();
+        buttons.alignmentProperty().setValue(Pos.CENTER);
         url = new TextField();
         username = new TextField();
         password = new PasswordField();
         login = new Button("login");
         clear = new Button("clear");
-        getChildren().add(new Text("Game URL"));
-        getChildren().add(url);
-        getChildren().add(new Text("Username"));
-        getChildren().add(username);
-        getChildren().add(new Text("Password"));
-        getChildren().add(password);
-        getChildren().add(login);
-        getChildren().add(clear);
+        fields.getChildren().add(new Label("Game URL", url));
+        fields.getChildren().add(new Label("Username", username));
+        fields.getChildren().add(new Label("Password", password));
+        buttons.getChildren().add(login);
+        buttons.getChildren().add(clear);
+
+        setTop(fields);
+        setCenter(buttons);
 
         login.setOnAction(event -> {
             System.out.println("TODO: handle login for " + username.getText());
