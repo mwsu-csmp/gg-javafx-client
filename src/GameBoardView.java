@@ -12,6 +12,8 @@ public class GameBoardView  extends FlowPane {
             ImageView demoScreen = new ImageView(demo);
             demoScreen.setX(0);
             demoScreen.setY(0);
+            this.setWidth(400);
+            this.setHeight(300);
             demoScreen.fitHeightProperty().setValue(300);
             demoScreen.fitWidthProperty().setValue(400);
             demoScreen.setPreserveRatio(true);

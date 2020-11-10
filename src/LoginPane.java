@@ -19,7 +19,8 @@ public class LoginPane extends BorderPane {
     public LoginPane() {
         VBox fields = new VBox();
         HBox buttons = new HBox();
-        buttons.alignmentProperty().setValue(Pos.CENTER);
+        fields.alignmentProperty().setValue(Pos.BOTTOM_CENTER);
+        buttons.alignmentProperty().setValue(Pos.TOP_CENTER);
         url = new TextField();
         username = new TextField();
         password = new PasswordField();
@@ -30,7 +31,6 @@ public class LoginPane extends BorderPane {
         fields.getChildren().add(new Label("Password", password));
         buttons.getChildren().add(login);
         buttons.getChildren().add(clear);
-
         setTop(fields);
         setCenter(buttons);
 
