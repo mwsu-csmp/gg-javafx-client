@@ -1,3 +1,5 @@
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -41,5 +43,9 @@ public class LoginPane extends BorderPane {
             username.clear();
             password.clear();
         });
+    }
+
+    public void setLoginAction(EventHandler<ActionEvent> action) {
+        login.setOnAction(action);
     }
 }
