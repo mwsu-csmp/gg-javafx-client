@@ -17,15 +17,15 @@ public class GGClient extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        loginPane = new LoginPane();
+        loginPane = new LoginPane(username -> {
+            gamePane.prepareForUser(username);
+            primaryStage.setScene(gameScene);
+        });
         loginScene = new Scene(loginPane);
         gamePane = new GamePane();
         gameScene = new Scene(gamePane);
         primaryStage.setScene(loginScene);
 
-        loginPane.setLoginAction(event -> {
-            primaryStage.setScene(gameScene);
-        });
 
         primaryStage.setTitle("GG Client");
         primaryStage.show();
