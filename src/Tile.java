@@ -4,15 +4,9 @@ import javafx.scene.image.ImageView;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-public class Tile {
-    public Tile(String imageFilePath) {
-        try {
-            Image tile = new Image(new FileInputStream(imageFilePath));
-            ImageView demoTile = new ImageView(tile);
-            demoTile.setPreserveRatio(true);
-        } catch (IOException e) {
-            System.out.println(e);
-        }
+public class Tile extends ImageView {
+    public Tile(String imageFilePath) throws IOException {
+        super(new Image(new FileInputStream(imageFilePath)));
     }
 
 }
