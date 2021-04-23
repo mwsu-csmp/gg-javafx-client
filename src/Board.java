@@ -3,7 +3,12 @@ import java.io.IOException;
 
 public class Board extends GridPane {
 
-    public Board()  {
+    public Board(GameConnection connection, String boardName)  {
+        var jsonDescription = connection.getBoardJSON(boardName);
+        // TODO: parse json
+        // TODO: use json parameters to initialize board
+        // TODO: use
+
         final int boardWidth = 20;
         final int boardHeight = 12;
 
@@ -12,7 +17,7 @@ public class Board extends GridPane {
                 Tile sample = null;
                 {
                     try {
-                        sample = new Tile("resources/tile.png");
+                        sample = new Tile(connection, "grass");
                         add(sample, 0, 0);
                     } catch (IOException e) {
                         e.printStackTrace();

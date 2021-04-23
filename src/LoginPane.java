@@ -7,11 +7,16 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.util.function.Consumer;
 
 public class LoginPane extends BorderPane {
     private String authenticatedUser = null;
-    private final Consumer<String>  postLoginAction;
+    private final Consumer<GameConnection>  postLoginAction;
     private final TextField url;
     private final TextField username;
     private final PasswordField password;
@@ -23,7 +28,7 @@ public class LoginPane extends BorderPane {
      *
      * @param postLoginAction action to be run on the authenticated user name when someone logs in
      */
-    public LoginPane(Consumer<String> postLoginAction) {
+    public LoginPane(Consumer<GameConnection> postLoginAction, HttpClient client) {
         this.postLoginAction = postLoginAction;
         VBox fields = new VBox();
         HBox buttons = new HBox();
@@ -47,12 +52,22 @@ public class LoginPane extends BorderPane {
         // login button should attempt to authenticate user and run the post login action if successful
         login.setOnAction(event -> {
             // TODO: authenticate user properly
-            if(username.getText().equals("user") && password.getText().equals("password")) {
-                authenticatedUser = username.getText();
-                postLoginAction.accept(authenticatedUser);
-            } else {
-                errorMessage.setText("ERROR: could not authenticate user" + username.getText() + " with given password");
-            }
+            var username = this.username.getText();
+            var password = this.password.getText();
+            //var request = HttpRequest.newBuilder()
+            //        .uri(URI.create(url.getText()));
+
+            //try {
+                // TODO: connect to game
+                //client.sendAsync(request, ...
+                authenticatedUser = username;
+                var gameConnection = new GameConnection(client, username);
+                postLoginAction.accept(gameConnection);
+            //} catch(IOException e) {
+            //    errorMessage.setText("ERROR: could not authenticate user" + this.username.getText() + " with given password");
+            //} catch(InterruptedException e2) {
+            //    errorMessage.setText("ERROR: could not authenticate user" + this.username.getText() + " with given password");
+            //}
         });
 
         clear.setOnAction(event -> {

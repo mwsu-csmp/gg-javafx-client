@@ -6,7 +6,7 @@ import javafx.scene.layout.VBox;
 
 
 public class GamePane extends BorderPane {
-    private final GameBoardView gameView = new GameBoardView();
+    private final GameBoardView gameView = new GameBoardView(20, 12);
     private final GameControls controls = new GameControls();
     private final ListView<String> inventory= new ListView<>(
             FXCollections.observableArrayList(
@@ -19,7 +19,7 @@ public class GamePane extends BorderPane {
     private final TextField message = new TextField();
     private final Button sendMessage = new Button("Send");
     private final Label authenticatedUser = new Label();
-
+    private GameConnection gameConnection;
 
     public GamePane() {
         VBox leftPane = new VBox();
@@ -41,8 +41,13 @@ public class GamePane extends BorderPane {
         setRight(rightPane);
     }
 
-
-    public void prepareForUser(String username) {
-        this.authenticatedUser.setText(username);
+    /** client connected over network to game, load game details */
+    public void setGameConnection(GameConnection connection) {
+        this.gameConnection = connection;
+        this.authenticatedUser.setText(connection.getUsername());
+        // for now, load a dummy board to test and view top left corner of board:
+        gameView.setBoard(new Board(gameConnection,"outside"));
+        gameView.setOrientation(0, 0);
     }
+
 }
