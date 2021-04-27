@@ -27,7 +27,7 @@ public class GameBoardView extends StackPane {
 
     /** sets the current board for this view */
     public void setBoard(Board board) {
-        // TODO: ensure board can be updated with new board
+        getChildren().removeAll();
         getChildren().add(board);
     }
 
