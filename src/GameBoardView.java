@@ -1,19 +1,26 @@
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class GameBoardView extends StackPane {
+
+    private Board board;
+    private int width;
+    private int height;
+
     public GameBoardView(int width, int height) {
-        this.setPrefWidth(width);
-        this.setPrefHeight(height);
-        this.setMaxHeight(height);
-        this.setMaxWidth(width);
+        this.width = width*25;
+        this.height = height*25;
+        this.setPrefWidth(width*25);
+        this.setPrefHeight(height*25);
+        this.setMaxHeight(height*25);
+        this.setMaxWidth(width*25);
     }
 
     /** moves the window's upper-left-hand-corner to the specified
@@ -22,14 +29,19 @@ public class GameBoardView extends StackPane {
      * @param col
      */
     public void setOrientation(int row, int col) {
-        // TODO: move window over the appropriate place on the board
+        final Rectangle outputClip = new Rectangle();
+        outputClip.setX(row);
+        outputClip.setY(col);
+        outputClip.setWidth(width);
+        outputClip.setHeight(height);
+        board.setClip(outputClip);
     }
 
     /** sets the current board for this view */
     public void setBoard(Board board) {
-        getChildren().removeAll();
-        getChildren().add(board);
+        this.board = board;
+        if(getChildren().size() == 0) getChildren().add(new Pane(board));
+        else getChildren().set(0, new Pane(board));
     }
-
 
 }
