@@ -14,7 +14,6 @@ public class GameBoardView extends StackPane {
         this.setPrefHeight(height);
         this.setMaxHeight(height);
         this.setMaxWidth(width);
-        this.getChildren().addAll(this);
     }
 
     /** moves the window's upper-left-hand-corner to the specified
