@@ -7,7 +7,7 @@ import javafx.scene.layout.VBox;
 
 public class GamePane extends BorderPane {
     private final GameBoardView gameView = new GameBoardView(20, 12);
-    private final GameControls controls = new GameControls();
+
     private final ListView<String> inventory= new ListView<>(
             FXCollections.observableArrayList(
                     "sword",
@@ -15,6 +15,13 @@ public class GamePane extends BorderPane {
                     "5 bucks"
             )
     );
+    private int testOrientationX = 0; // part of a testing harness, remove later
+    private int testOrientationY = 0; // part of a testing harness, remove later
+    private Board testboard1 = null;// part of a testing harness, remove later
+    private Board testboard2 = null;// part of a testing harness, remove later
+    private int currentTestBoard = 1; // part of a testing harness, remove later
+
+    private final GameControls controls;
     private final TextArea chat = new TextArea();
     private final TextField message = new TextField();
     private final Button sendMessage = new Button("Send");
@@ -33,6 +40,30 @@ public class GamePane extends BorderPane {
         messageSendBar.setRight(sendMessage);
         leftPane.getChildren().add(messageSendBar);
 
+        controls = new GameControls(
+                event -> {
+                    testOrientationX-=50;
+                    gameView.setOrientation(testOrientationX, testOrientationY);
+                },
+                event -> {
+                    testOrientationX+=50;
+                    gameView.setOrientation(testOrientationX, testOrientationY);
+                },
+                event -> {
+                    testOrientationY-= 50;
+                    gameView.setOrientation(testOrientationX, testOrientationY);
+                },
+                event -> {
+                    testOrientationY+= 50;
+                    gameView.setOrientation(testOrientationX, testOrientationY);
+                },
+                event -> {
+                    currentTestBoard = (currentTestBoard) % 2 + 1; // toggle between two test maps
+                    gameView.setBoard(currentTestBoard ==1 ? testboard1 : testboard2 );
+                    gameView.setOrientation(0, 0);
+                }
+        );
+
         VBox rightPane = new VBox();
         rightPane.getChildren().add(inventory);
         rightPane.getChildren().add(controls);
@@ -46,8 +77,9 @@ public class GamePane extends BorderPane {
         this.gameConnection = connection;
         this.authenticatedUser.setText(connection.getUsername());
         // for now, load a dummy board to test and view top left corner of board:
-        gameView.setBoard(new Board(gameConnection,"outside"));
-        gameView.setOrientation(0, 0);
+        testboard1 = new Board(gameConnection, "outside");
+        testboard2 = new Board(gameConnection, "foyer");
+        gameView.setBoard(testboard1 );
+        gameView.setOrientation(0, 0);;
     }
-
 }

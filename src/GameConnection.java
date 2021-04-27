@@ -25,10 +25,20 @@ public class GameConnection {
      * @return
      */
     public Image resolveTileTexture(String tileType) {
+        //for now, hardcode a few tile types for debugging
         try {
             // TODO: retrieve correct texture from server
-            return new Image(new FileInputStream("resources/tile.png"));
-                // for now, return dummy tile image for debugging
+            switch(tileType) {
+                case "wall":
+                    return new Image(new FileInputStream("resources/wall.png"));
+                case "floor":
+                    return new Image(new FileInputStream("resources/floor.png"));
+                case "grass":
+                    return new Image(new FileInputStream("resources/grass.png"));
+
+                default:
+                    return new Image(new FileInputStream("resources/tile.png"));
+            }
         }catch(IOException e) {
             // TODO: kill client connection, go back to login screen
             return null;
