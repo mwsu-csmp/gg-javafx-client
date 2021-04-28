@@ -45,6 +45,10 @@ public class GameConnection {
         }
     }
 
+    /** gets the JSON file
+     * @param boardName the room name
+     * @return the JSON associated with the room name
+     */
     public String getBoardJSON(String boardName) {
         // TODO: retrieve JSON from server
 
