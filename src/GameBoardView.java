@@ -35,6 +35,9 @@ public class GameBoardView extends StackPane {
         outputClip.setWidth(width);
         outputClip.setHeight(height);
         board.setClip(outputClip);
+        getChildren().get(0).setTranslateX(-row);
+        getChildren().get(0).setTranslateY(-col);
+
     }
 
     /** sets the current board for this view */
